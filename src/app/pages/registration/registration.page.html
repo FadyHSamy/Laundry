@@ -1,0 +1,35 @@
+<ion-content [fullscreen]="true" class="main-css">
+  <div class="center-container">
+    <ion-card>
+      <ion-img
+        src="https://www.logomyway.com/logos_new/25044/LA5_888752354033.png"
+      ></ion-img>
+    </ion-card>
+  </div>
+</ion-content>
+
+<!-- <ion-item>
+  <ion-avatar slot="start">
+    <ion-img
+      src="https://image.similarpng.com/very-thumbnail/2020/04/Flag-Egypt-circle-png.png"
+    ></ion-img>
+  </ion-avatar>
+  <ion-input></ion-input>
+</ion-item> -->
+<ion-list>
+  <ion-list-header class="ion-text-center">
+    <ion-label style="font-size: 1.5em">Phone Number</ion-label>
+  </ion-list-header>
+
+  <ion-item lines="none">
+    <ion-avatar slot="start">
+      <ion-img [src]="selectedCountryImage"></ion-img>
+    </ion-avatar>
+    <ion-label>{{selectedCountryCode}}</ion-label>
+    <ion-input type="number" placeholder="123456789"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-button fill="clear">Test</ion-button>
+  </ion-item>
+</ion-list>

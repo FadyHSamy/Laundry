@@ -1,0 +1,13 @@
+.main-css {
+  --background: #42abe0;
+  // --overflow: hidden
+}
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+  ion-card {
+    border-radius: 25px;
+  }
+}
