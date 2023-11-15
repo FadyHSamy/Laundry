@@ -1,13 +1,20 @@
-.main-css {
-  --background: #42abe0;
-  // --overflow: hidden
+// Welcome Page
+.welcome-page {
+  --background: #fff url("../../../assets/icon/welcomePage.png") no-repeat center
+    center / cover;
 }
-.center-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 75vh;
-  ion-card {
-    border-radius: 25px;
+.bottom-row-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.button-row {
+  ion-button {
+    background: linear-gradient(175deg, #a95efa 3.64%, #8a49f7 96.35%);
+    border-radius: 1.875rem;
+    color: white;
+    width: 250px;
+    max-width: 250px;
   }
 }
