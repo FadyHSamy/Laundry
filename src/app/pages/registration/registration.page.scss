@@ -1,7 +1,7 @@
 // Welcome Page
 .welcome-page {
-  --background: #fff url("../../../assets/icon/welcomePage.png") no-repeat center
-    center / cover;
+  --background: #fff url("../../../assets/icon/welcomePage.png") no-repeat
+    center center / cover;
 }
 .bottom-row-container {
   position: absolute;
@@ -17,4 +17,32 @@
     width: 250px;
     max-width: 250px;
   }
+}
+// Login Form
+.login-title {
+  font-size: x-large;
+  font-weight: 600;
+  text-wrap: wrap;
+}
+.login-welcome-message {
+  color: gray;
+  text-wrap: wrap;
+}
+.input-login-container {
+  display: flex;
+  align-items: center;
+}
+// Register Form
+.register-title {
+  font-size: x-large;
+  font-weight: 600;
+  text-wrap: wrap;
+}
+.register-welcome-message {
+  color: gray;
+  text-wrap: wrap;
+}
+.input-register-container {
+  display: flex;
+  align-items: center;
 }

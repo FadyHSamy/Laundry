@@ -1,21 +1,135 @@
-<ion-content class="welcome-page" *ngIf="true">
+<!-- First Page -->
+<ion-content class="welcome-page" *ngIf="ifWelcomePage">
   <ion-grid class="bottom-row-container">
-    <ion-row class="ion-align-items-center ion-justify-content-center">
+    <ion-row class="ion-align-items-center ion-justify-content-center text-center ">
       <ion-label style="font-weight: 500; font-size: x-large;">Welcome to Laundry!</ion-label>
     </ion-row>
 
-    <ion-row style="margin: 20px;" class="text-center">
+    <ion-row style="margin: 20px;" class="ion-align-items-center ion-justify-content-center text-center">
       <ion-label style="font-size: medium;">
         With extensive experience in the audio industry, we strive to create the highest quality products.
       </ion-label>
     </ion-row>
     <ion-row class="ion-justify-content-center button-row">
-      <ion-button shape="round" fill="clear">
+      <ion-button shape="round" fill="clear" (click)="welcomeToLogin()">
         GET STARTED
         <ion-icon name="arrow-forward-outline"></ion-icon></ion-button>
     </ion-row>
   </ion-grid>
 </ion-content>
-<ion-content>
-
+<!-- Login Form -->
+<ion-content  *ngIf="ifLoginPage">
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-title>
+        <ion-icon name="arrow-back-circle-outline" size="large" (click)="loginToWelcome()"></ion-icon>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-grid>
+    <ion-list lines="none">
+      <ion-item>
+        <ion-label class="login-title">Let's Sign You In</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="login-welcome-message">Welcome back, you've been missed!</ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <form [formGroup]="loginInfoForm">
+        <ion-item class="input-login-container" style="padding-bottom: 1rem;">
+          <ion-icon name="mail-outline" style="padding-right: 5px;"></ion-icon>
+          <ion-input placeholder="Email" formControlName="email"></ion-input>
+          <ion-icon *ngIf=" loginInfoFormValidation && loginInfoForm.controls['email'].hasError('required')"
+            name="alert-circle-outline" style="color: red;"></ion-icon>
+        </ion-item>
+        <ion-item class="input-login-container">
+          <ion-icon name="lock-closed-outline" style="padding-right: 5px;"></ion-icon>
+          <ion-input placeholder="Password" [type]="passwordType" formControlName="password"></ion-input>
+          <ion-icon name="eye-outline" (click)="showPassword()" *ngIf="!showPasswordFlag" size="large"></ion-icon>
+          <ion-icon name="eye-off-outline" (click)="showPassword()" *ngIf="showPasswordFlag" size="large"></ion-icon>
+          <ion-icon *ngIf="loginInfoFormValidation && loginInfoForm.controls['password'].hasError('required')"
+            name="alert-circle-outline" style="color: red;"></ion-icon>
+        </ion-item>
+      </form>
+    </ion-list>
+    <ion-list lines="none">
+      <ion-row class="ion-justify-content-center">
+        <ion-button fill="clear" (click)="signInBtn()">SIGN IN<ion-icon name="log-in-outline"></ion-icon></ion-button>
+      </ion-row>
+      <ion-item class="text-center">
+        <ion-label style="text-wrap: wrap;">
+          Don't have an account?
+          <a href="#" onclick="return false;" (click)="loginToSignUp()"> Sign up</a>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-grid>
+</ion-content>
+<!-- Registeration Form -->
+<ion-content *ngIf="ifRegisterPage">
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-title>
+        <!-- <ion-icon name="arrow-back-circle-outline" size="large" (click)="registerToWelcome()"></ion-icon> -->
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-grid>
+    <ion-list lines="none">
+      <ion-item>
+        <ion-label class="register-title">Getting Started</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="register-welcome-message">Create an account to continue!</ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <form [formGroup]="registerInfoForm">
+        <ion-item class="input-register-container" style="padding-bottom: 1rem;">
+          <ion-icon name="person-outline" style="padding-right: 5px;"></ion-icon>
+          <ion-input type="text" placeholder="First Name" formControlName="first_name"></ion-input>
+          <ion-icon *ngIf="registerInfoFormValidation && registerInfoForm.controls['first_name'].hasError('required')"
+            name="alert-circle-outline" style="color: red;"></ion-icon>
+        </ion-item>
+        <ion-item class="input-register-container" style="padding-bottom: 1rem;">
+          <ion-icon name="person-outline" style="padding-right: 5px;"></ion-icon>
+          <ion-input type="text" placeholder="Last Name" formControlName="last_name"></ion-input>
+          <ion-icon *ngIf="registerInfoFormValidation && registerInfoForm.controls['last_name'].hasError('required')"
+            name="alert-circle-outline" style="color: red;"></ion-icon>
+        </ion-item>
+        <ion-item class="input-register-container" style="padding-bottom: 1rem;">
+          <ion-icon name="mail-outline" style="padding-right: 5px;"></ion-icon>
+          <ion-input type="text" placeholder="Email" formControlName="email"></ion-input>
+          <ion-icon *ngIf="registerInfoFormValidation && registerInfoForm.controls['email'].hasError('required')"
+            name="alert-circle-outline" style="color: red;"></ion-icon>
+        </ion-item>
+        <ion-item class="input-register-container" style="padding-bottom: 1rem;">
+          <ion-icon name="lock-closed-outline" style="padding-right: 5px;"></ion-icon>
+          <ion-input placeholder="Password" [type]="passwordType" formControlName="password"></ion-input>
+          <ion-icon name="eye-outline" (click)="showPassword()" *ngIf="!showPasswordFlag" size="large"></ion-icon>
+          <ion-icon name="eye-off-outline" (click)="showPassword()" *ngIf="showPasswordFlag" size="large"></ion-icon>
+          <ion-icon *ngIf="registerInfoFormValidation && registerInfoForm.controls['password'].hasError('required')"
+            name="alert-circle-outline" style="color: red;"></ion-icon>
+        </ion-item>
+        <ion-item class="input-register-container" style="padding-bottom: 1rem;">
+          <ion-icon name="call-outline" style="padding-right: 5px;"></ion-icon>
+          <ion-input type="text" placeholder="Phone Number" formControlName="phone_number"></ion-input>
+          <ion-icon *ngIf="registerInfoFormValidation && registerInfoForm.controls['phone_number'].hasError('required')"
+            name="alert-circle-outline" style="color: red;"></ion-icon>
+        </ion-item>
+      </form>
+    </ion-list>
+    <ion-list lines="none">
+      <ion-row class="ion-justify-content-center">
+        <ion-button fill="clear" (click)="signUpBtn()">SIGN UP<ion-icon name="log-out-outline"></ion-icon></ion-button>
+      </ion-row>
+      <ion-item class="text-center">
+        <ion-label style="text-wrap: wrap;">
+          Already have an account?
+          <a href="#" onclick="return false;" (click)="registerToSignIN()"> Sign in</a>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-grid>
 </ion-content>
