@@ -1,0 +1,26 @@
+<ion-header>
+</ion-header>
+
+<ion-content>
+  <ng-content></ng-content>
+</ion-content>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom" *ngIf="isTabVisible()">
+    <ion-tab-button tab="homepage">
+      <fa-icon [icon]="faHome"></fa-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="registration">
+      <fa-icon [icon]="faBasketShopping"></fa-icon>
+      <ion-label>Booking</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="menu">
+      <fa-icon [icon]="faBars"></fa-icon>
+      <ion-label>Menu</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs>

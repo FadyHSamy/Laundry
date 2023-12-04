@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EnvService } from 'src/app/shared/services/env.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { loginEntity } from 'src/app/shared/models/loginEntity';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { errorResponse } from 'src/app/shared/models/errorResponse';
+import { apiResponse } from 'src/app/shared/models/apiResponse';
+import { Router } from '@angular/router';
+import { TabVisibilityService } from 'src/app/shared/services/tab-visibility.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.page.html',
@@ -14,7 +20,10 @@ export class RegistrationPage implements OnInit {
     private formBuilder: FormBuilder,
     private env: EnvService,
     private http: HttpClient,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private router: Router,
+    private tabVisibilityService: TabVisibilityService,
+    private StorageService: StorageService
   ) {}
   //#region Variables
   ifWelcomePage: boolean = true;
@@ -25,7 +34,9 @@ export class RegistrationPage implements OnInit {
   loginInfoFormValidation: boolean = false;
   registerInfoFormValidation: boolean = false;
   //#endregion
-  ngOnInit() {}
+  ngOnInit() {
+    this.tabVisibilityService.isTabVisible = false;
+  }
 
   welcomeToLogin() {
     this.ifWelcomePage = false;
@@ -63,21 +74,19 @@ export class RegistrationPage implements OnInit {
       let Password: string = this.loginInfoForm.value.password;
 
       this.http
-        .post<loginEntity>(this.env.laundryURL + 'api/Auth/Login', {
+        .post<apiResponse>(this.env.laundryURL + 'users/userLogin', {
           email: Email,
           password: Password,
         })
         .subscribe({
           next: async (data) => {
-            console.log('data', data);
-            await this.alertService.successAlert(
-              'Login successful',
-              false
-            );
+            this.StorageService.setUserInfo(data.responseData.user)
+            this.tabVisibilityService.isTabVisible = true;
+            this.router.navigateByUrl('/homepage');
           },
-          error: (err) => {
+          error: (err: errorResponse) => {
             console.log(err);
-            this.alertService.errorAlert(err.error);
+            this.alertService.errorAlert(err.error?.message);
           },
         });
     }
@@ -93,29 +102,22 @@ export class RegistrationPage implements OnInit {
       let Phone_Number: string = this.registerInfoForm.value.phone_number;
 
       this.http
-        .post(this.env.laundryURL + 'api/Auth/Register', {
-          first_name: First_name,
-          last_name: Last_name,
+        .post<apiResponse>(this.env.laundryURL + 'users/userRegister', {
+          firstName: First_name,
+          lastName: Last_name,
           email: Email,
           password: Password,
-          phone_number: Phone_Number,
+          phoneNumber: Phone_Number,
         })
         .subscribe({
-          next: async (data) => {
-            await this.alertService.successAlert(
-              'Registration successful',
-              false
-            );
+          next: async (data: apiResponse) => {
+            await this.alertService.successAlert(data.message, false);
             this.registerToSignIN();
           },
-          error: (err) => {
+          error: (err: errorResponse) => {
             console.log(err);
             if (err.error) {
-              this.alertService.errorAlert(err.error);
-            } else {
-              this.alertService.errorAlert(
-                'An error occurred during registration.'
-              );
+              this.alertService.errorAlert(err.error.message);
             }
           },
         });

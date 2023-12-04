@@ -10,16 +10,21 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'menu',
-    loadChildren: () =>
-      import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
-  },
-  {
     path: 'registration',
     loadChildren: () =>
       import('./pages/registration/registration.module').then(
         (m) => m.RegistrationPageModule
       ),
+  },
+  {
+    path: 'booking',
+    loadChildren: () =>
+      import('./pages/booking/booking.module').then((m) => m.BookingPageModule),
+  },
+  {
+    path: 'menu',
+    loadChildren: () =>
+      import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
   },
 ];
 @NgModule({
