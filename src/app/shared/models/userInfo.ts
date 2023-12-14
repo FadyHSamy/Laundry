@@ -6,4 +6,5 @@ export interface userInfo {
   phoneNumber: string;
   status: string;
   userRole: string;
+  address: string;
 }

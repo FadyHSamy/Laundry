@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA,NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -12,7 +12,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { register } from 'swiper/element/bundle';
+register();
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
   imports: [
@@ -31,5 +32,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HttpClient,
   ],
   bootstrap: [AppComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

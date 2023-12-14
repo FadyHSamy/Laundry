@@ -1,11 +1,139 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>
-      Hello, {{userInfo?.firstName || 'test'}}
-    </ion-title>
+    <ion-buttons slot="start" fill="clear">
+      <ion-button id="user-profile-btn">
+        <ion-avatar>
+          <img
+            src="https://scontent.fcai19-2.fna.fbcdn.net/v/t39.30808-6/397315657_6643295985717623_207535663461797188_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=qptNITqL_mgAX8NoXWc&_nc_ht=scontent.fcai19-2.fna&oh=00_AfB19Qm3ABEzWmAvDWquzRElGYCGpBZoH-4IkcYi7_VDbA&oe=6579D974" />
+        </ion-avatar>
+      </ion-button>
+      <!-- <ion-label style="padding-left: 10px; font-weight: 500;">
+        {{ (userInfo.firstName + ' ' + userInfo.lastName) | titlecase }}
+        <p>{{userInfo.address}}</p>
+      </ion-label> -->
+    </ion-buttons>
+    <ion-buttons slot="end" fill="clear">
+      <ion-button>
+        <fa-icon [icon]="faBell" class="fa-xl"></fa-icon>
+      </ion-button>
+      <!-- <ion-button>
+        <fa-icon [icon]="faBars" class="fa-xl"></fa-icon>
+      </ion-button> -->
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-label>sdas</ion-label>
+  <ion-title>
+    Top Services
+  </ion-title>
+  <!-- <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" fill="clear">
+          <ion-avatar>
+            <img src="../../../assets/icon/wash&fold.png" />
+          </ion-avatar>
+          <ion-label>
+            Wash
+          </ion-label>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" fill="clear">
+          <ion-icon slot="icon-only" name="locate"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" fill="clear">
+          <ion-icon slot="icon-only" name="planet"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+  <swiper-container [slidesPerView]="4">
+    <swiper-slide>
+      <ion-button expand="block" fill="clear">
+        <ion-avatar>
+          <img src="../../../assets/icon/laundry.png" />
+          <ion-label>Laundry</ion-label>
+        </ion-avatar>
+      </ion-button>
+    </swiper-slide>
+    <swiper-slide>
+      <ion-button expand="block" fill="clear">
+        <ion-avatar>
+          <img src="../../../assets/icon/wash&fold.png" />
+          <ion-label>wash & fold</ion-label>
+        </ion-avatar>
+      </ion-button>
+    </swiper-slide>
+    <swiper-slide>
+      <ion-button expand="block" fill="clear">
+        <ion-avatar>
+          <img src="../../../assets/icon/irons.png" />
+          <ion-label>iron</ion-label>
+        </ion-avatar>
+      </ion-button>
+    </swiper-slide>
+    <swiper-slide>
+      <ion-button expand="block" fill="clear">
+        <ion-avatar>
+          <img src="../../../assets/icon/wash&fold.png" />
+          <ion-label>Dry Clean</ion-label>
+        </ion-avatar>
+      </ion-button>
+    </swiper-slide>
+  </swiper-container>
 </ion-content>
+
+<ion-popover trigger="user-profile-btn" triggerAction="click">
+  <ng-template>
+    <ion-content>
+      <ion-list lines="none" style="display: flex; flex-direction: column;  align-items: center;">
+        <ion-item style="border-bottom-width: 1px;">
+          <ion-avatar>
+            <img
+              src="https://scontent.fcai19-2.fna.fbcdn.net/v/t39.30808-6/397315657_6643295985717623_207535663461797188_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=qptNITqL_mgAX8NoXWc&_nc_ht=scontent.fcai19-2.fna&oh=00_AfB19Qm3ABEzWmAvDWquzRElGYCGpBZoH-4IkcYi7_VDbA&oe=6579D974" />
+          </ion-avatar>
+          <ion-label style="padding-left: 10px;">
+            <ion-label style="font-weight: 500;">Fady Hany</ion-label>
+            <p>Abd El Hamied Abou Heif</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-buttons>
+            <ion-button (click)="test()">
+              <fa-icon [icon]="faUser" class="fa-xl" style="padding-right: 10px;"></fa-icon>
+              <ion-label>Account</ion-label>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ion-item style="border-bottom-width: 1px;">
+          <ion-buttons>
+            <ion-button>
+              <fa-icon [icon]="faGear" class="fa-xl" style="padding-right: 10px;"></fa-icon>
+              <ion-label>Settings</ion-label>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <!-- <ion-item style="border-bottom-width: 1px;">
+          <ion-buttons>
+            <ion-button>
+              <fa-icon [icon]="faMoon" class="fa-xl" style="padding-right: 10px;"></fa-icon>
+              <ion-label>Dark Mode</ion-label>
+            </ion-button>
+          </ion-buttons>
+        </ion-item> -->
+        <ion-item>
+          <ion-buttons>
+            <ion-button (click)="logOut()">
+              <fa-icon [icon]="faArrowRightFromBracket" class="fa-xl" style="padding-right: 10px;"></fa-icon>
+              <ion-label>Sign Out</ion-label>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>

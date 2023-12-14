@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA,NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -7,14 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { HomepagePageRoutingModule } from './homepage-routing.module';
 
 import { HomepagePage } from './homepage.page';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HomepagePageRoutingModule
+    HomepagePageRoutingModule,
+    FontAwesomeModule
   ],
-  declarations: [HomepagePage]
+  declarations: [HomepagePage],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomepagePageModule {}

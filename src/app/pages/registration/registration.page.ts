@@ -8,7 +8,7 @@ import { errorResponse } from 'src/app/shared/models/errorResponse';
 import { apiResponse } from 'src/app/shared/models/apiResponse';
 import { Router } from '@angular/router';
 import { TabVisibilityService } from 'src/app/shared/services/tab-visibility.service';
-import { StorageService } from 'src/app/shared/services/storage.service';
+import { AuthService } from 'src/app/shared/services/AuthService.service';
 
 @Component({
   selector: 'app-registration',
@@ -23,7 +23,7 @@ export class RegistrationPage implements OnInit {
     private alertService: AlertService,
     private router: Router,
     private tabVisibilityService: TabVisibilityService,
-    private StorageService: StorageService
+    private AuthService: AuthService
   ) {}
   //#region Variables
   ifWelcomePage: boolean = true;
@@ -72,23 +72,7 @@ export class RegistrationPage implements OnInit {
     if (this.loginInfoForm.valid == true) {
       let Email: string = this.loginInfoForm.value.email;
       let Password: string = this.loginInfoForm.value.password;
-
-      this.http
-        .post<apiResponse>(this.env.laundryURL + 'users/userLogin', {
-          email: Email,
-          password: Password,
-        })
-        .subscribe({
-          next: async (data) => {
-            this.StorageService.setUserInfo(data.responseData.user)
-            this.tabVisibilityService.isTabVisible = true;
-            this.router.navigateByUrl('/homepage');
-          },
-          error: (err: errorResponse) => {
-            console.log(err);
-            this.alertService.errorAlert(err.error?.message);
-          },
-        });
+      this.AuthService.login(Email, Password);
     }
   }
   signUpBtn() {
