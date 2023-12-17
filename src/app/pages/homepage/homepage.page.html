@@ -1,10 +1,11 @@
+<!-- <ion-button id="open-loading">Show Loading</ion-button>
+<ion-loading></ion-loading> -->
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start" fill="clear">
       <ion-button id="user-profile-btn">
         <ion-avatar>
-          <img
-            src="https://scontent.fcai19-2.fna.fbcdn.net/v/t39.30808-6/397315657_6643295985717623_207535663461797188_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=qptNITqL_mgAX8NoXWc&_nc_ht=scontent.fcai19-2.fna&oh=00_AfB19Qm3ABEzWmAvDWquzRElGYCGpBZoH-4IkcYi7_VDbA&oe=6579D974" />
+          <ion-img src="../../../assets/icon/profile-png.png"></ion-img>
         </ion-avatar>
       </ion-button>
       <!-- <ion-label style="padding-left: 10px; font-weight: 500;">
@@ -24,33 +25,14 @@
 </ion-header>
 
 <ion-content>
+  <swiper-container class="swiper-container">
+    <swiper-slide *ngFor="let panel of panelDetails;">
+      <img (click)="clickingImage(panel.promotionId)" [src]="panel.promotionImage" />
+    </swiper-slide>
+  </swiper-container>
   <ion-title>
-    Top Services
+    Services
   </ion-title>
-  <!-- <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-button expand="block" fill="clear">
-          <ion-avatar>
-            <img src="../../../assets/icon/wash&fold.png" />
-          </ion-avatar>
-          <ion-label>
-            Wash
-          </ion-label>
-        </ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button expand="block" fill="clear">
-          <ion-icon slot="icon-only" name="locate"></ion-icon>
-        </ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button expand="block" fill="clear">
-          <ion-icon slot="icon-only" name="planet"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
   <swiper-container [slidesPerView]="4">
     <swiper-slide>
       <ion-button expand="block" fill="clear">
@@ -79,7 +61,7 @@
     <swiper-slide>
       <ion-button expand="block" fill="clear">
         <ion-avatar>
-          <img src="../../../assets/icon/wash&fold.png" />
+          <img src="../../../assets/icon/dry-clean-1.png" />
           <ion-label>Dry Clean</ion-label>
         </ion-avatar>
       </ion-button>
@@ -90,20 +72,19 @@
 <ion-popover trigger="user-profile-btn" triggerAction="click">
   <ng-template>
     <ion-content>
-      <ion-list lines="none" style="display: flex; flex-direction: column;  align-items: center;">
+      <ion-list lines="none">
         <ion-item style="border-bottom-width: 1px;">
           <ion-avatar>
-            <img
-              src="https://scontent.fcai19-2.fna.fbcdn.net/v/t39.30808-6/397315657_6643295985717623_207535663461797188_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=qptNITqL_mgAX8NoXWc&_nc_ht=scontent.fcai19-2.fna&oh=00_AfB19Qm3ABEzWmAvDWquzRElGYCGpBZoH-4IkcYi7_VDbA&oe=6579D974" />
+            <ion-img src="../../../assets/icon/profile-png.png"></ion-img>
           </ion-avatar>
-          <ion-label style="padding-left: 10px;">
-            <ion-label style="font-weight: 500;">Fady Hany</ion-label>
-            <p>Abd El Hamied Abou Heif</p>
+          <ion-label style="padding-left: 10px; font-weight: 500;">
+            {{ (userInfo.firstName + ' ' + userInfo.lastName) | titlecase }}
+            <p>{{userInfo.address || ''}}</p>
           </ion-label>
         </ion-item>
         <ion-item>
           <ion-buttons>
-            <ion-button (click)="test()">
+            <ion-button (click)="accountBtn()">
               <fa-icon [icon]="faUser" class="fa-xl" style="padding-right: 10px;"></fa-icon>
               <ion-label>Account</ion-label>
             </ion-button>
@@ -117,14 +98,6 @@
             </ion-button>
           </ion-buttons>
         </ion-item>
-        <!-- <ion-item style="border-bottom-width: 1px;">
-          <ion-buttons>
-            <ion-button>
-              <fa-icon [icon]="faMoon" class="fa-xl" style="padding-right: 10px;"></fa-icon>
-              <ion-label>Dark Mode</ion-label>
-            </ion-button>
-          </ion-buttons>
-        </ion-item> -->
         <ion-item>
           <ion-buttons>
             <ion-button (click)="logOut()">

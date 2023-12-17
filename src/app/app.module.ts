@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA,NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -13,6 +13,9 @@ import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { register } from 'swiper/element/bundle';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoaderInterceptor } from './shared/interceptor/loader.interceptor';
+
 register();
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
@@ -24,14 +27,18 @@ register();
     HttpClientModule,
     CommonModule,
     FontAwesomeModule,
-
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
     EnvService,
     HttpClient,
   ],
   bootstrap: [AppComponent],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

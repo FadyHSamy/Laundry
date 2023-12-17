@@ -19,6 +19,7 @@ export class AlertService {
           handler: () => {},
         },
       ],
+      backdropDismiss: false,
     });
     (await alert).present();
   }
@@ -39,6 +40,7 @@ export class AlertService {
           },
         },
       ],
+      backdropDismiss: false,
     });
     (await alert).present();
   }

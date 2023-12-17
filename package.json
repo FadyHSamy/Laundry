@@ -8,6 +8,7 @@
     "start": "ionic serve",
     "start:android": "ionic cap run android -l --external --livereload",
     "build": "ng build",
+    "build:android": "ionic cap build android",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"

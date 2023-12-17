@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { userInfo } from 'src/app/shared/models/userInfo';
 import {
   faBell,
@@ -8,9 +8,11 @@ import {
   faArrowRightFromBracket,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { Swiper, SwiperOptions } from 'swiper/types';
+import { SwiperOptions } from 'swiper/types';
 import { AuthService } from 'src/app/shared/services/AuthService.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { LoadingController } from '@ionic/angular';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'app-homepage',
@@ -19,8 +21,9 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 })
 export class HomepagePage implements OnInit {
   constructor(
-    private authSerive: AuthService,
-    private alertService: AlertService
+    private authService: AuthService,
+    private alertService: AlertService,
+    private loaderService: LoaderService
   ) {}
 
   //#region Variables
@@ -30,16 +33,47 @@ export class HomepagePage implements OnInit {
   faMoon = faMoon;
   faArrowRightFromBracket = faArrowRightFromBracket;
   faUser = faUser;
+  panelDetails = [
+    {
+      promotionId: 1,
+      promotionImage: '../../../assets/icon/salesPanel-1.png',
+      url: null,
+    },
+    {
+      promotionId: 2,
+      promotionImage: '../../../assets/icon/amaz.png',
+      url: null,
+    },
+  ];
   userInfo!: userInfo;
+
   //#endregion
 
-  ngOnInit() {
-    this.userInfo = this.authSerive.getUserInfo();
+  async ngOnInit() {
+    this.userInfo = this.authService.getUserInfo();
+  }
+  ngAfterViewInit(): void {
+    const swiperEl = document.querySelector('swiper-container');
+    const swiperParams: SwiperOptions = {
+      slidesPerView: 1,
+      loop: false,
+      pagination: { enabled: true },
+      autoplay: { delay: 1500 },
+      speed: 1000,
+    };
+    Object.assign(swiperEl!, swiperParams);
+    swiperEl!.initialize();
   }
   logOut() {
-    this.authSerive.logout();
+    this.authService.logout();
   }
-  test(){
-    console.log(this.userInfo)
+  accountBtn() {
+    console.log(this.userInfo);
+  }
+  clickingImage(promotionId: number) {
+    this.alertService.successAlert(
+      'Coming Soon ' + promotionId.toString(),
+      false
+    );
   }
 }

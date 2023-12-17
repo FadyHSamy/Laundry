@@ -9,6 +9,7 @@ import { apiResponse } from 'src/app/shared/models/apiResponse';
 import { Router } from '@angular/router';
 import { TabVisibilityService } from 'src/app/shared/services/tab-visibility.service';
 import { AuthService } from 'src/app/shared/services/AuthService.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'app-registration',
@@ -23,7 +24,8 @@ export class RegistrationPage implements OnInit {
     private alertService: AlertService,
     private router: Router,
     private tabVisibilityService: TabVisibilityService,
-    private AuthService: AuthService
+    private AuthService: AuthService,
+    private loaderService: LoaderService
   ) {}
   //#region Variables
   ifWelcomePage: boolean = true;
@@ -46,12 +48,11 @@ export class RegistrationPage implements OnInit {
     this.ifLoginPage = false;
     this.ifWelcomePage = true;
     this.loginInfoFormValidation = false;
+    this.loginInfoForm.patchValue({
+      email: this.registerInfoForm.value['email'],
+      password: this.registerInfoForm.value['password'],
+    });
   }
-  // registerToWelcome() {
-  //   this.ifRegisterPage = false;
-  //   this.ifWelcomePage = true;
-  //   this.registerInfoFormValidation = false;
-  // }
   loginToSignUp() {
     this.ifLoginPage = false;
     this.ifRegisterPage = true;
@@ -66,13 +67,14 @@ export class RegistrationPage implements OnInit {
     this.showPasswordFlag = !this.showPasswordFlag;
     this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
   }
-  signInBtn() {
+  async signInBtn() {
     this.loginInfoFormValidation = true;
 
-    if (this.loginInfoForm.valid == true) {
-      let Email: string = this.loginInfoForm.value.email;
-      let Password: string = this.loginInfoForm.value.password;
-      this.AuthService.login(Email, Password);
+    if (this.loginInfoForm.valid) {
+      const email: string = this.loginInfoForm.value.email;
+      const password: string = this.loginInfoForm.value.password;
+
+      await this.AuthService.login(email, password);
     }
   }
   signUpBtn() {
@@ -96,6 +98,16 @@ export class RegistrationPage implements OnInit {
         .subscribe({
           next: async (data: apiResponse) => {
             await this.alertService.successAlert(data.message, false);
+            this.loginInfoForm.patchValue({
+              email: this.registerInfoForm.value['email'],
+            });
+            this.registerInfoForm.patchValue({
+              first_name: null,
+              last_name: null,
+              email: null,
+              password: null,
+              phone_number: null,
+            });
             this.registerToSignIN();
           },
           error: (err: errorResponse) => {
