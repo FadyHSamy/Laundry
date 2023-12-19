@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { EnvService } from './env.service';
 import { errorResponse } from '../models/errorResponse';
 import * as jwt_decode from 'jwt-decode';
@@ -22,6 +22,16 @@ export class AuthService {
     private tabVisibilityService: TabVisibilityService,
     private alertService: AlertService
   ) {}
+
+  // Simulate a token refresh by making a request to your server
+  refreshToken(): Observable<string> {
+    // Make a request to your server's token refresh endpoint
+    // Replace 'your_refresh_endpoint' with the actual URL of your refresh endpoint
+    return this.http.post<any>(`${this.env.laundryURL}/refresh-token`, {}).pipe(
+      // Assuming your server returns a new token in the response
+      map((response) => response)
+    );
+  }
 
   getUserInfo(): any {
     const token = this.getToken();
@@ -46,7 +56,6 @@ export class AuthService {
           this.router.navigateByUrl('/homepage');
         },
         error: (err: errorResponse) => {
-          console.log(err);
           this.alertService.errorAlert(err.error?.message);
         },
       });

@@ -15,6 +15,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { register } from 'swiper/element/bundle';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoaderInterceptor } from './shared/interceptor/loader.interceptor';
+import { AuthenticationInterceptor } from './shared/interceptor/authentication.interceptor';
+import { ErrorHandlerInterceptor } from './shared/interceptor/error-handler.interceptor';
+import { RefreshTokenInterceptor } from './shared/interceptor/refresh-token.interceptor';
 
 register();
 @NgModule({
@@ -33,6 +36,21 @@ register();
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RefreshTokenInterceptor,
       multi: true,
     },
     EnvService,

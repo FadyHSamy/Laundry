@@ -3,7 +3,8 @@ ion-menu::part(backdrop) {
 }
 
 ion-menu::part(container) {
-  border-radius: 20px 0 0 20px;
+  border-radius: 0 0 0 0;
   width: 100%;
   z-index: 90;
 }
+

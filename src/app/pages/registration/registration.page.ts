@@ -111,7 +111,6 @@ export class RegistrationPage implements OnInit {
             this.registerToSignIN();
           },
           error: (err: errorResponse) => {
-            console.log(err);
             if (err.error) {
               this.alertService.errorAlert(err.error.message);
             }

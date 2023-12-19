@@ -8,8 +8,11 @@ import {
   faUser,
   faBars,
   faRegistered,
+  faList,
 } from '@fortawesome/free-solid-svg-icons';
 import { TabVisibilityService } from '../../services/tab-visibility.service';
+import { Router } from '@angular/router';
+import { BackButtonService } from '../../services/back-button.service';
 
 @Component({
   selector: 'app-layout',
@@ -19,24 +22,49 @@ import { TabVisibilityService } from '../../services/tab-visibility.service';
 export class LayoutComponent implements OnInit {
   constructor(
     private tabVisibilityService: TabVisibilityService,
-    private menuController: MenuController
+    private menuController: MenuController,
+    private router: Router,
+    private backButtonService: BackButtonService
   ) {}
   //#region variables
-  faBasketShopping = faBasketShopping;
-  faHome = faHome;
-  faUser = faUser;
-  faBars = faBars;
-  faRegistered = faRegistered;
+  shoppingBasketIcon = faBasketShopping;
+  homeIcon = faHome;
+  userIcon = faUser;
+  barsIcon = faBars;
+  registeredIcon = faRegistered;
+  listIcon = faList;
+  menuItems = [
+    {
+      name: 'Home',
+      icon: this.homeIcon,
+      redirectTo: '/homepage',
+    },
+    {
+      name: 'Cart',
+      icon: this.shoppingBasketIcon,
+      redirectTo: '/cart',
+    },
+    {
+      name: 'Orders',
+      icon: this.listIcon,
+      redirectTo: '/orders',
+    },
+  ];
   //#endregion
 
   ngOnInit() {
     this.menuController.swipeGesture(false);
+    this.backButtonService.setupBackButtonHandler(async () => {});
   }
 
   isTabVisible = (): boolean => {
     return this.tabVisibilityService.isTabVisible;
   };
-  openMenu() {
-    this.menuController.toggle(); // Toggle the menu state (open/close)
-  }
+  toggleMainMenu = () => {
+    this.menuController.toggle('mainMenu');
+  };
+  navigateToPage = (redirectTo: string) => {
+    this.toggleMainMenu();
+    this.router.navigateByUrl(redirectTo);
+  };
 }

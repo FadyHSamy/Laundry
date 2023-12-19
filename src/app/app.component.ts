@@ -8,12 +8,11 @@ import { AuthService } from './shared/services/AuthService.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private router: Router,private authSerive:AuthService) {
-    if(authSerive.isAuthenticated()){
-      console.log(authSerive.isAuthenticated())
+  constructor(private router: Router, private authSerive: AuthService) {
+    if (authSerive.isAuthenticated()) {
       this.router.navigateByUrl('/homepage');
-    }else{
-      router.navigateByUrl('/registration')
+    } else {
+      router.navigateByUrl('/registration');
     }
   }
 }

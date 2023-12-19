@@ -67,9 +67,7 @@ export class HomepagePage implements OnInit {
   logOut() {
     this.authService.logout();
   }
-  accountBtn() {
-    console.log(this.userInfo);
-  }
+  accountBtn() {}
   clickingImage(promotionId: number) {
     this.alertService.successAlert(
       'Coming Soon ' + promotionId.toString(),

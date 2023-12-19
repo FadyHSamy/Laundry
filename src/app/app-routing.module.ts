@@ -17,14 +17,14 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'booking',
+    path: 'orders',
     loadChildren: () =>
-      import('./pages/booking/booking.module').then((m) => m.BookingPageModule),
+      import('./pages/orders/orders.module').then((m) => m.OrdersPageModule),
   },
   {
-    path: 'menu',
+    path: 'cart',
     loadChildren: () =>
-      import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
+      import('./pages/cart/cart.module').then((m) => m.CartPageModule),
   },
 ];
 @NgModule({
